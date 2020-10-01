@@ -3,24 +3,29 @@ const User = require("../models/User");
 const utils = require("../Utils");
 
 var LIMIT_TIME = 10;
+var NUM_ROUND = 3;
 
 
 
 class Room {
     constructor() {
-        this.round = [3,2];
+        this.round = [0,0];
         this.result = [];
         this.playerID_1 = null;
         this.playerID_2 = null;
     };
 
-    setRound(round) {
-        this.round = round;
-    }
-
     setPlayers(player_1, player_2) {
         this.playerID_1 = player_1;
         this.playerID_2 = player_2;
+    }
+
+    setActionForPlayer_1(action_1) {
+        this.round[0] = action_1;
+    }
+
+    setActionForPlayer_2(action_2) {
+        this.round[1] = action_2;
     }
 
     calcResult() {
@@ -54,9 +59,14 @@ class Room {
     
     };
 
+
+    // -1: chua xg tran
+    //  0: hoa
+    // id_1: player 1 win
+    // id_2: player 2 win
     calcPoint() {
-        if(this.result.length !== 3)
-            return;
+        if(this.result.length <= NUM_ROUND)
+            return -1;
         let countForPlayer_1 = 0;
         let countForPlayer_2 = 0;
         for (let i = 0; i < this.result.length; i++) {
@@ -69,7 +79,7 @@ class Room {
         }
 
         if(countForPlayer_1 === countForPlayer_2) {
-            return null;
+            return 0;
         }
         if(countForPlayer_1 > countForPlayer_2) {
             // add 3 points for user 1
