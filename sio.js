@@ -24,6 +24,11 @@ io.on('connection', (socket) => {
             return;
         }
 
+        let topQueue = queue[0];
+        if (topQueue.userInfo.idUser === playRequest.idUser) {
+            return;
+        }
+
         console.log("SOCKET RECEIVED HEIUFLIAKDFAD", playRequest);
         if (queue.length === 0) {
             queue.push({
