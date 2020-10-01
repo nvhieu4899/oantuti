@@ -3,11 +3,13 @@ const sequelize = require('sequelize')
 
 
 const User = db.define("User", {
-    idUser: sequelize.INTEGER,
+    idUser: sequelize.STRING,
     name: sequelize.STRING,
     numTurn: sequelize.INTEGER,
     point: sequelize.INTEGER
 })
+
+
 
 // db.sync()
 // .then(()=>{
