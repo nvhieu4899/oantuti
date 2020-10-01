@@ -5,18 +5,18 @@ var BONUS_POINT = 3;
 var updateTurn = function (playerID) {
     user.findOne({
         where: {
-            id: playerID
+            idUser: playerID
         }
     })
         .then(result => {
             if (result) {
-                let currPoint = result.point;
-                currPoint--;
+                let currTurn = result.numTurn;
+                currTurn-- ;
                 user.update({
-                    point: currPoint
+                    numTurn: currTurn
                 }, {
                     where: {
-                        id: playerID
+                        idUser: playerID
                     }
                 })
             }
@@ -26,18 +26,18 @@ var updateTurn = function (playerID) {
 var updatePoint = function (playerID) {
     user.findOne({
         where: {
-            id: playerID
+            idUser: playerID
         }
     })
         .then(result => {
             if (result) {
-                let currTurn = result.numTurn;
-                currTurn += BONUS_POINT;
+                let currPoint = result.point;
+                currPoint += BONUS_POINT;
                 user.update({
-                    numTurn: currTurn
+                    point: currPoint
                 }, {
                     where: {
-                        id: playerID
+                        idUser: playerID
                     }
                 })
             }
@@ -45,8 +45,26 @@ var updatePoint = function (playerID) {
 
 }
 
+var checkPlayable = function (playerID) {
+    user.findOne({
+        where: {
+            idUser: playerID
+        }
+    })
+        .then(result => {
+            if(result) {
+                if(result.numTurn > 0)
+                    return true;
+            }
+        })
+    return false;
+}
+
+
+
 module.exports =
     {
         updateTurn: updateTurn,
-        updatePoint: updatePoint
+        updatePoint: updatePoint,
+        checkPlayable: checkPlayable
     };

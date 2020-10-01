@@ -2,6 +2,7 @@ const io = require('socket.io')(3030);
 const UUID = require('uuid');
 const Room = require("./models/Room");
 
+const Utils = require('./Utils');
 
 let rooms = {};
 const TOTAL_TURN = 3;
@@ -17,6 +18,11 @@ message
  */
 io.on('connection', (socket) => {
     socket.on('play_request', (playRequest) => {
+
+        if (!Utils.checkPlayable(playRequest.idUser)) {
+            socket.emit('error', 'Khong con luot choi');
+            return;
+        }
 
         console.log("SOCKET RECEIVED HEIUFLIAKDFAD", playRequest);
         if (queue.length === 0) {
@@ -44,13 +50,9 @@ io.on('connection', (socket) => {
 
             playRoom.setPlayers(player1, player2);
             console.log("ROOM", playRoom);
-
             //Match found process at client
-
             io.to(opponent.socketId).emit('match_found', rooms[roomId]);
             io.to(socket.id).emit('match_found', rooms[roomId]);
-
-
         }
     });
 
@@ -122,9 +124,13 @@ io.on('connection', (socket) => {
             io.in(roomId).emit('match_result',
                 result);
             if (result.res === 1) {
-                //Utils.
-            }
+                Utils.updatePoint(room.playerID_1.idUser);
+            } else if (result.res === 2) {
+                Utils.updatePoint(room.playerID_2.idUser);
 
+            }
+            Utils.updateTurn(room.playerID_1.idUser);
+            Utils.updateTurn(room.playerID_2.idUser);
         }
     });
 
