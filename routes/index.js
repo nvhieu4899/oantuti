@@ -34,4 +34,16 @@ router.post('/signup', urlencodedParser, (req, res) => {
 
 });
 
+router.get('/api/top100', function(req, res, next) {
+    user.findAll({
+        offset : 0,
+        limit : 100,
+        order : [['point', 'DESC']],
+    })
+        .then(result => {
+            if(result) {
+                res.json(result);
+            }
+        })
+});
 module.exports = router;

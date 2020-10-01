@@ -19,13 +19,13 @@ message
 io.on('connection', (socket) => {
     socket.on('play_request', (playRequest) => {
 
-        if (!Utils.checkPlayable(playRequest.idUser)) {
-            socket.emit('error', 'Khong con luot choi');
-            return;
-        }
+        // if (!Utils.checkPlayable(playRequest.idUser)) {
+        //     socket.emit('error', 'Khong con luot choi');
+        //     return;
+        // }
 
         let topQueue = queue[0];
-        if (topQueue.userInfo.idUser === playRequest.idUser) {
+        if (topQueue && topQueue.userInfo.idUser === playRequest.idUser) {
             return;
         }
 
@@ -102,6 +102,10 @@ io.on('connection', (socket) => {
         if (roundResult === -1) return;
 
         console.log("ROUND_RESULT", roundResult);
+        let winner = Utils.checkWinner(roundResult[0], roundResult[1]);
+        let point = Utils.countResult(room.result);
+
+
 
         if (room.result.length < TOTAL_TURN) {
             io.in(roomId).emit('round_result',
@@ -109,17 +113,27 @@ io.on('connection', (socket) => {
                     roundResult:
                         {
                             player1_action: roundResult[0],
-                            player2_action: roundResult[1]
+                            player2_action: roundResult[1],
+                            winner: winner,
+                            point: point,
+                            numTurn: room.result.length
                         }
                 }
             );
+            console.log("test len", room.result.length)
         } else {
+
+
             io.in(roomId).emit('round_result',
                 {
                     roundResult:
                         {
                             player1_action: roundResult[0],
-                            player2_action: roundResult[1]
+                            player2_action: roundResult[1],
+                            winner: winner,
+                            point: point,
+                            numTurn: room.result.length
+
                         }
                 }
             );
