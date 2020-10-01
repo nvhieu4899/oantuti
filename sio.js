@@ -69,6 +69,18 @@ io.on('connection', (socket) => {
 
         let room = rooms[roomId];
 
+        let socketIdInRoom = io.sockets.clients(roomId);
+
+        console.log("IN ROOM ", roomId, socketIdInRoom);
+        console.log("SOCKETID: ", socket.id);
+        if (!socketIdInRoom.filter(item => {
+            item === socket.id
+        }).length > 0) {
+            socket.join(roomId);
+        }
+        console.log("IN ROOM ", roomId, socketIdInRoom);
+        console.log("SOCKETID: ", socket.id);
+
         if (playMessage.playerId === room.playerID_1 && room.round[0] === 0) {
             room.setActionForPlayer_1(playMessage.action);
         } else if (playMessage.playerId === room.playerID_2 && room.round[1] === 0) {

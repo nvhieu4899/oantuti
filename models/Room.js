@@ -30,7 +30,7 @@ class Room {
     calcResult() {
         let action_1 = this.round[0];
         let action_2 = this.round[1];
-        if (action_1 == 0 || action_2 == 0)
+        if (action_1 === 0 || action_2 === 0)
             return;
         if (action_1 === action_2) {
             this.result.push(0);
