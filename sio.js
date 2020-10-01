@@ -53,7 +53,6 @@ io.on('connection', (socket) => {
     socket.on('ra_nuoc_di', (senderId, playMessage) => {
         let roomId = playMessage.roomId;
 
-
         let room = rooms[roomId];
 
         if (playMessage.playerId === room.playerID_1 && room.round[0] === 0) {
@@ -67,8 +66,6 @@ io.on('connection', (socket) => {
         if (result === -1) {
             return
         }
-
-
     });
 
 
@@ -85,10 +82,6 @@ io.on('connection', (socket) => {
         }
 
      */
-
-    socket.on('disconnect',)
-
-
 });
 
 module.exports = io;
