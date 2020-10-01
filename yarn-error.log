@@ -1,0 +1,53 @@
+Arguments: 
+  /usr/local/bin/node /usr/share/yarn/bin/yarn.js install
+
+PATH: 
+  /home/thanhisme/.local/bin:/home/thanhisme/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/openjdk-11/bin:/opt/apache-maven-3.6.3/bin
+
+Yarn version: 
+  1.21.1
+
+Node version: 
+  12.16.3
+
+Platform: 
+  linux x64
+
+Trace: 
+  SyntaxError: /home/thanhisme/Workplace/momotest/oantuti/package.json: Unexpected string in JSON at position 397
+      at JSON.parse (<anonymous>)
+      at /usr/share/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/share/yarn/lib/cli.js:310:30)
+      at /usr/share/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "oantuti",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+      "start": "node ./bin/www"
+    },
+    "dependencies": {
+      "cassandra-driver": "^4.6.0",
+      "cookie-parser": "~1.4.4",
+      "debug": "~2.6.9",
+      "dotenv": "^8.2.0",
+      "express": "~4.16.1",
+      "http-errors": "~1.6.3",
+      "ioredis": "^4.17.3",
+      "morgan": "~1.9.1",
+      "redis": "^3.0.2",
+      "ws": "^7.3.1"
+      "nodemon": "^2.0.4",
+      "pg": "^8.3.3",
+      "sequelize": "^6.3.5"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
