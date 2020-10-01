@@ -103,7 +103,7 @@ io.on('connection', (socket) => {
 
         console.log("ROUND_RESULT", roundResult);
         let winner = Utils.checkWinner(roundResult[0], roundResult[1]);
-        let point = Utils.countResult(room.result);
+        let point = Utils.countResult(room.result, room.playerID_1.idUser, room.playerID_2.idUser);
 
 
 
@@ -115,12 +115,13 @@ io.on('connection', (socket) => {
                             player1_action: roundResult[0],
                             player2_action: roundResult[1],
                             winner: winner,
-                            point: point,
+                            point_1: point[0],
+                            point_2: point[1],
                             numTurn: room.result.length
                         }
                 }
             );
-            console.log("test len", room.result.length)
+
         } else {
 
 
@@ -131,7 +132,8 @@ io.on('connection', (socket) => {
                             player1_action: roundResult[0],
                             player2_action: roundResult[1],
                             winner: winner,
-                            point: point,
+                            point_1: point[0],
+                            point_2: point[1],
                             numTurn: room.result.length
 
                         }

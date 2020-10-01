@@ -81,13 +81,16 @@ var checkWinner = (action_1, action_2) => {
     }
 }
 
-var countResult = (listRes) => {
-    let res = [];
+var countResult = (listRes, id_1, id_2) => {
+    let res = [0,0];
     for(let i=0; i < listRes.length; i++) {
-        if(res[listRes[i]] == null)
-            res[listRes[i]] = 1;
-        else
-            res[listRes[i]]++;
+        console.log("abc", id_1, id_2, listRes[i]);
+        if(listRes[i] == id_1) {
+            res[0]++;
+        }
+        if(listRes[i] == id_2) {
+            res[1]++;
+        }
     }
     console.log("test", res);
     return res;
