@@ -34,8 +34,9 @@ class Room {
             return;
         if (action_1 === action_2) {
             this.result.push(0);
+            const res =  this.round;
             this.round = [0, 0];
-            return;
+            return res;
         }
 
         if (Math.abs(action_1 - action_2) === 1) {
@@ -51,8 +52,9 @@ class Room {
                 this.result.push(this.playerID_2.idUser);
             }
         }
+        const res =  this.round;
         this.round = [0, 0];
-
+        return res;
     };
 
 

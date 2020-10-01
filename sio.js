@@ -4,6 +4,7 @@ const Room = require("./models/Room");
 
 
 let rooms = {};
+const TOTAL_TURN = 3;
 
 let queue = [];
 
@@ -53,9 +54,6 @@ io.on('connection', (socket) => {
         }
     });
 
-    socket.on('play_accept', (senderId, playerMessage) => {
-        socket.join(playerMessage.roomId);
-    });
 
     /*
         playMessage:
@@ -76,10 +74,37 @@ io.on('connection', (socket) => {
         } else if (playMessage.playerId === room.playerID_2 && room.round[1] === 0) {
             room.setActionForPlayer_2(playMessage.action);
         }
-        let result = room.calcResult();
 
-        if (result === -1) {
-            return
+        let roundResult = room.calcResult();
+
+        if (room.result.length < TOTAL_TURN) {
+            io.in(roomId).emit('round_result',
+                {
+                    roundResult:
+                        {
+                            player1_action: roundResult[0],
+                            player2_action: roundResult[1]
+                        }
+                }
+            );
+        } else {
+            io.in(roomId).emit('round_result',
+                {
+                    roundResult:
+                        {
+                            player1_action: roundResult[0],
+                            player2_action: roundResult[1]
+                        }
+                }
+            );
+            let result = room.calcPoint();
+            if (result === 0) {
+                io.in(roomId).emit('match_result',
+                    {winner: 0});
+            } else {
+                io.in(roomId).emit('match_result',
+                    {winner: result});
+            }
         }
     });
 
