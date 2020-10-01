@@ -7,13 +7,8 @@ const User = db.define("User", {
     name: sequelize.STRING,
     numTurn: sequelize.INTEGER,
     point: sequelize.INTEGER
-})
+});
 
+//db.sync().then(() => console.log("create user"));
 
-
-// db.sync()
-// .then(()=>{
-//     console.log("Create User successfully...")
-// })
-
-module.exports = User
+module.exports = User;

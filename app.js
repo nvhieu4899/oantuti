@@ -11,7 +11,7 @@ var app = express();
 
 require('dotenv').config();
 
-require('./test');
+require('./sio');
 
 app.use(logger('dev'));
 app.use(express.json());
