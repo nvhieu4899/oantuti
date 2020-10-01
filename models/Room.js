@@ -40,15 +40,15 @@ class Room {
 
         if (Math.abs(action_1 - action_2) === 1) {
             if (action_1 > action_2) {
-                this.result.push(this.playerID_1);
+                this.result.push(this.playerID_1.idUser);
             } else {
-                this.result.push(this.playerID_2);
+                this.result.push(this.playerID_2.idUser);
             }
         } else {
             if (action_1 < action_2) {
-                this.result.push(this.playerID_1);
+                this.result.push(this.playerID_1.idUser);
             } else {
-                this.result.push(this.playerID_2);
+                this.result.push(this.playerID_2.idUser);
             }
         }
         this.round = [0, 0];
@@ -66,10 +66,10 @@ class Room {
         let countForPlayer_1 = 0;
         let countForPlayer_2 = 0;
         for (let i = 0; i < this.result.length; i++) {
-            if (this.result[i] == this.playerID_1) {
+            if (this.result[i] == this.playerID_1.idUser) {
                 countForPlayer_1++;
             }
-            if (this.result[i] == this.playerID_2) {
+            if (this.result[i] == this.playerID_2.idUser) {
                 countForPlayer_2++;
             }
         }
@@ -80,12 +80,12 @@ class Room {
         if (countForPlayer_1 > countForPlayer_2) {
             // add 3 points for user 1
             //utils.updatePoint(this.playerID_1);
-            return this.playerID_1;
+            return this.playerID_1.idUser;
             // respone
         } else {
             // add 3 points for user 2
             //utils.updatePoint(this.playerID_2);
-            return this.playerID_2;
+            return this.playerID_2.idUser;
         }
         // utils.updateTurn(this.playerID_1);
         // utils.updateTurn(this.playerID_2);

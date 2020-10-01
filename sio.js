@@ -10,7 +10,7 @@ let queue = [];
 /*
 message
 {
-    userId: String,
+    idUser: String,
     name: String
 }
  */
@@ -31,14 +31,25 @@ io.on('connection', (socket) => {
 
             let playRoom = rooms[roomId];
 
+            let player1 = {
+                idUser: opponent.userInfo.idUser,
+                name: opponent.userInfo.name
+            }
 
-            playRoom.setPlayers(opponent.userInfo.idUser, playRequest.idUser);
+            let player2 = {
+                idUser: playRequest.idUser,
+                name: playRequest.name
+            }
+
+            playRoom.setPlayers(player1, player2);
             console.log("ROOM", playRoom);
 
             //Match found process at client
 
-            socket.to(opponent.socketId).emit('match_found', rooms[roomId]);
-            socket.to(socket.id).emit('match_found', rooms[roomId]);
+            io.to(opponent.socketId).emit('match_found', rooms[roomId]);
+            io.to(socket.id).emit('match_found', rooms[roomId]);
+
+
         }
     });
 
@@ -65,7 +76,6 @@ io.on('connection', (socket) => {
         } else if (playMessage.playerId === room.playerID_2 && room.round[1] === 0) {
             room.setActionForPlayer_2(playMessage.action);
         }
-
         let result = room.calcResult();
 
         if (result === -1) {
