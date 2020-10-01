@@ -46,4 +46,21 @@ router.get('/api/top100', function(req, res, next) {
             }
         })
 });
+
+router.get('/api/user/:userid',(req,res,next)=>
+{
+
+	let playerID = req.params['userid'];
+	console.log(playerID)
+
+	user.findOne({
+		where: {
+				idUser: playerID
+		}
+})
+		.then(result => {
+				res.json(result);
+		});
+
+})
 module.exports = router;
