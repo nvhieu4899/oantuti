@@ -115,8 +115,8 @@ io.on('connection', (socket) => {
                             player1_action: roundResult[0],
                             player2_action: roundResult[1],
                             winner: winner,
-                            point_1: point[0],
-                            point_2: point[1],
+                            point_2: point[0],
+                            point_1: point[1],
                             numTurn: room.result.length
                         }
                 }
