@@ -1,5 +1,6 @@
 const WS = require('ws');
-const SUBSCRIBER = require('./config/redis').SUBSCRIBER;
+const redisClient = require('./config/redis');
+const QUEUE_CHANNEL = require("./QUEUE_CHANNEL");
 
 const WS_SERVER = new WS.Server(
     {
@@ -7,9 +8,23 @@ const WS_SERVER = new WS.Server(
     }
 );
 WS_SERVER.on('connection', (ws) => {
-    ws.on('play', (data) => {
+    ws.on('message', (data) => {
+        redisClient.lpop([QUEUE_CHANNEL], (err, reply) => {
+            if (err) {
+                let queueNode = {
+                    playerId: data.playerid
+                }
 
-    })
+                redisClient.rpush([QUEUE_CHANNEL, queueNode], (err, reply) => {
+
+                });
+            } else {
+                redisClient.lpop([QUEUE_CHANNEL], (err, reply) => {
+                    ws.emit('match_found')
+                });
+            }
+        });
+    });
 });
 
 module.exports = WS_SERVER;
