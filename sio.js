@@ -102,8 +102,11 @@ io.on('connection', (socket) => {
         if (roundResult === -1) return;
 
         console.log("ROUND_RESULT", roundResult);
-        let winner = Utils.checkWinner(roundResult[0], roundResult[1]);
-        let point = Utils.countResult(room.result, room.playerID_1.idUser, room.playerID_2.idUser);
+				let winner = Utils.checkWinner(roundResult[0], roundResult[1]);
+				
+				console.log("ROOM AFT")
+
+        let point = Utils.countResult(room.result);
 
 
 
@@ -115,8 +118,7 @@ io.on('connection', (socket) => {
                             player1_action: roundResult[0],
                             player2_action: roundResult[1],
                             winner: winner,
-                            point_2: point[0],
-                            point_1: point[1],
+                            point: point,
                             numTurn: room.result.length
                         }
                 }
@@ -132,8 +134,7 @@ io.on('connection', (socket) => {
                             player1_action: roundResult[0],
                             player2_action: roundResult[1],
                             winner: winner,
-                            point_1: point[0],
-                            point_2: point[1],
+                            point: point,
                             numTurn: room.result.length
 
                         }

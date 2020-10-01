@@ -41,15 +41,15 @@ class Room {
 
         if (Math.abs(action_1 - action_2) === 1) {
             if (action_1 > action_2) {
-                this.result.push(this.playerID_1.idUser);
-            } else {
                 this.result.push(this.playerID_2.idUser);
+            } else {
+                this.result.push(this.playerID_1.idUser);
             }
         } else {
             if (action_1 < action_2) {
-                this.result.push(this.playerID_1.idUser);
-            } else {
                 this.result.push(this.playerID_2.idUser);
+            } else {
+                this.result.push(this.playerID_1.idUser);
             }
         }
         const res = this.round;

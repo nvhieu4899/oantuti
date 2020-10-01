@@ -66,34 +66,31 @@ var checkPlayable = function (playerID) {
 var checkWinner = (action_1, action_2) => {
     if (action_1 === action_2)
         return 0;
-    if (Math.abs(action_1 - action_2) === 1) {
-        if (action_1 > action_2) {
-            return 1;
-        } else {
-            return 2;
-        }
-    } else {
-        if (action_1 < action_2) {
-            return 1;
-        } else {
-            return 2;
-        }
-    }
+    switch (action_1-action_2)
+		{
+			case -1:
+				return 1;
+			case 1:
+				return 2;
+			case -2:
+				return 1;
+			case 2:
+				return 2;
+			default:
+				return 0;
+		}
 }
 
-var countResult = (listRes, id_1, id_2) => {
-    let res = [0,0];
-    for(let i=0; i < listRes.length; i++) {
-        console.log("abc", id_1, id_2, listRes[i]);
-        if(listRes[i] == id_1) {
-            res[0]++;
-        }
-        if(listRes[i] == id_2) {
-            res[1]++;
-        }
-    }
-    console.log("test", res);
-    return res;
+var countResult = (listRes) => {
+	let res = {};
+	for(let i=0; i < listRes.length; i++) {
+			if(res[listRes[i]] == null)
+					res[listRes[i]] = 1;
+			else
+					res[listRes[i]]++;
+	}
+	console.log("test", res);
+	return res;
 }
 
 module.exports = {updateTurn, updatePoint, checkPlayable, checkWinner, countResult};
