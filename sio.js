@@ -10,30 +10,35 @@ let queue = [];
 /*
 message
 {
-    id: String,
+    userId: String,
     name: String
 }
  */
 io.on('connection', (socket) => {
-    socket.on('play_request', (id, message) => {
+    socket.on('play_request', (playRequest) => {
+
+        console.log("SOCKET RECEIVED HEIUFLIAKDFAD", playRequest);
         if (queue.length === 0) {
             queue.push({
-                userInfo: message,
-                socketId: id
-            })
+                userInfo: playRequest,
+                socketId: socket.id
+            });
         } else {
             //dequeue hang cho choi
             let opponent = queue.shift();
-
-            let roomId = UUID.v5();
+            let roomId = UUID.v4();
             rooms[roomId] = new Room(roomId);
 
             let playRoom = rooms[roomId];
-            playRoom.setPlayers(opponent.userInfo.id, message.id);
+
+
+            playRoom.setPlayers(opponent.userInfo.idUser, playRequest.idUser);
+            console.log("ROOM", playRoom);
 
             //Match found process at client
+
             socket.to(opponent.socketId).emit('match_found', rooms[roomId]);
-            socket.to(id).emit('match_found', rooms[roomId]);
+            socket.to(socket.id).emit('match_found', rooms[roomId]);
         }
     });
 
