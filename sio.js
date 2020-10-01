@@ -64,12 +64,17 @@ io.on('connection', (socket) => {
             action: Number // keo hoac bua hoac bao
         }
      */
-    socket.on('ra_nuoc_di', (senderId, playMessage) => {
+    socket.on('ra_nuoc_di', (playMessage) => {
+        console.log(playMessage);
         let roomId = playMessage.roomId;
-
         let room = rooms[roomId];
 
-        let socketIdInRoom = io.sockets.clients(roomId);
+        let socketIdInRoom = [];
+        io.of('/').in(roomId).clients((error, clients) => {
+            if (error) console.log(error);
+            else
+                console.log("LIST ALL CLIENT", clients); // => [Anw2LatarvGVVXEIAAAD]
+        });
 
         console.log("IN ROOM ", roomId, socketIdInRoom);
         console.log("SOCKETID: ", socket.id);
@@ -81,13 +86,15 @@ io.on('connection', (socket) => {
         console.log("IN ROOM ", roomId, socketIdInRoom);
         console.log("SOCKETID: ", socket.id);
 
-        if (playMessage.playerId === room.playerID_1 && room.round[0] === 0) {
+        if (playMessage.playerId === room.playerID_1.idUser && room.round[0] === 0) {
             room.setActionForPlayer_1(playMessage.action);
-        } else if (playMessage.playerId === room.playerID_2 && room.round[1] === 0) {
+        } else if (playMessage.playerId === room.playerID_2.idUser && room.round[1] === 0) {
             room.setActionForPlayer_2(playMessage.action);
         }
-
         let roundResult = room.calcResult();
+        if (roundResult === -1) return;
+
+        console.log("ROUND_RESULT", roundResult);
 
         if (room.result.length < TOTAL_TURN) {
             io.in(roomId).emit('round_result',
@@ -110,13 +117,14 @@ io.on('connection', (socket) => {
                 }
             );
             let result = room.calcPoint();
-            if (result === 0) {
-                io.in(roomId).emit('match_result',
-                    {winner: 0});
-            } else {
-                io.in(roomId).emit('match_result',
-                    {winner: result});
+            console.log(result);
+
+            io.in(roomId).emit('match_result',
+                result);
+            if (result.res === 1) {
+                //Utils.
             }
+
         }
     });
 

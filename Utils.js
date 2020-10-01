@@ -20,8 +20,7 @@ var updateTurn = function (playerID) {
                     }
                 })
             }
-        })
-
+        });
 }
 
 var updatePoint = function (playerID) {
