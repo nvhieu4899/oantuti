@@ -13,6 +13,11 @@ require('dotenv').config();
 
 require('./sio');
 
+const cors = require('cors');
+
+app.options('*', cors()) // include before other routes 
+app.use(cors())
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
