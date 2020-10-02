@@ -52,12 +52,11 @@ var checkPlayable = function (playerID) {
         }
     })
         .then(result => {
-            if (result) {
-                if (result.numTurn > 0)
-                    return true;
-            }
+            if (result.numTurn > 0)
+							return true;
+						else
+							return false;
         })
-    return false;
 }
 
 //0: hoa

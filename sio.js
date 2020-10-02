@@ -22,14 +22,15 @@ io.on('connection', (socket) => {
         // if (!Utils.checkPlayable(playRequest.idUser)) {
         //     socket.emit('error', 'Khong con luot choi');
         //     return;
-        // }
+				// }
+				// console.log("test enable", Utils.checkPlayable(playRequest.idUser))
 
         let topQueue = queue[0];
         if (topQueue && topQueue.userInfo.idUser === playRequest.idUser) {
             return;
         }
 
-        console.log("SOCKET RECEIVED HEIUFLIAKDFAD", playRequest);
+        console.log("SOCKET RECEIVED", playRequest);
         if (queue.length === 0) {
             queue.push({
                 userInfo: playRequest,
